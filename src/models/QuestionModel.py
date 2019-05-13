@@ -3,7 +3,7 @@ from marshmallow import fields, Schema
 from . import db
 import datetime
 
-
+from src.models.AnswerModel import AnswerModel, AnswerSchema
 
 
 
@@ -13,18 +13,16 @@ class QuestionModel(db.Model):
     __tablename__ = 'questions'
 
     id = db.Column(db.Integer, primary_key=True)
-    question = db.Column(db.Text, nullable=False)
-    answer_id = db.Column(db.Integer, db.ForeignKey('answers.id'), nullable=False)
+    question = db.Column(db.Text, nullable=False, unique=True)
+    answers = db.relationship('AnswerModel', backref='answers', lazy=True)
     created_at = db.Column(db.DateTime)
     modified_at = db.Column(db.DateTime)
     
 
 
     def __init__(self, data):
-        
-
+        self.id = data.get('id')
         self.question = data.get('question')
-        self.answer_id = data.get('answer_id')
         self.created_at = datetime.datetime.utcnow()
         self.modified_at = datetime.datetime.utcnow()
 
@@ -52,6 +50,10 @@ class QuestionModel(db.Model):
     def get_one_question(id):
         return QuestionModel.query.get(id)
     
+    @staticmethod
+    def get_question_by_id(value):
+        return QuestionModel.query.filter_by(question=value).first()
+    
 
     def _repr(self):
         return '<id {}>'.format(self.id)
@@ -62,7 +64,7 @@ class QuestionSchema(Schema):
 
     id = fields.Int(dump_only=True)
     question = fields.Str(required=True)
-    answer_id = fields.Int(required=True)
+    questions = fields.Nested(AnswerSchema, one=True)
     created_at = fields.DateTime(dump_only=True)
     modified_at = fields.DateTime(dump_only=True)
 
