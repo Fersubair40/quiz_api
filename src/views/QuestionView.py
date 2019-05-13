@@ -1,4 +1,4 @@
-from flask import request, json, Response, Blueprint
+from flask import request, json, Response, Blueprint, g
 
 from src.models.QuestionModel import QuestionModel, QuestionSchema
 
@@ -40,9 +40,48 @@ def get_all():
 
 
 
+    
+
+@question_api.route('/<int:question_id>', methods=['GET'])
+def get_one_question(question_id):
+    quesion = QuestionModel.get_one_question(question_id)
+    if not quesion:
+        return custom_response({'error':'question not found'}, 400)
+
+    ser_question = question_schema.dump(quesion).data
+    return custom_response(ser_question, 200)
 
 
 
+
+
+@question_api.route('/<int:question_id>', methods=['PUT'])
+def update(question_id):
+    req_data = request.get_json()
+    question = QuestionModel.get_one_question(question_id)
+    if not question:
+        return custom_response({'error':'question not found'}, 400)
+
+    data, error = question_schema.load(req_data, partial=True)
+    if error:
+        return custom_response(error, 400)
+
+    question.update(data)
+    ser_question = question_schema.dump(question).data
+    return custom_response(ser_question, 200)
+
+
+
+
+@question_api.route('<int:question_id>', methods=['DELETE'])
+def delete(question_id):
+    question = QuestionModel.get_one_question(question_id)
+    if not question:
+        return custom_response({'error':'question not found'}, 400)
+    
+    question.delete()
+    question = question_schema.dump(question).data
+    return custom_response(question, 204)
 
 
 
