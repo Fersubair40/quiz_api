@@ -14,7 +14,7 @@ class AnswerModel(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     answer = db.Column(db.String, nullable=False)
-    question_id = db.Column(db.Integer, db.ForeignKey('questions.id'), nullable=False)
+    response_id = db.Column(db.Integer, db.ForeignKey('questions.id'), nullable=False)
     created_at = db.Column(db.DateTime)
     modified_at = db.Column(db.DateTime)
     
@@ -22,7 +22,7 @@ class AnswerModel(db.Model):
     def __init__(self, data):
 
         self.answer = data.get('answer')
-        self.question_id = data.get('question_id')
+        self.response_id = data.get('response_id')
         self.created_at = datetime.datetime.utcnow()
         self.modified_at = datetime.datetime.utcnow()
 
@@ -61,7 +61,7 @@ class AnswerSchema(Schema):
 
     id = fields.Int(dump_only=True)
     answer = fields.Str(required=True)
-    question_id = fields.Int(required=True)
+    response_id = fields.Int(required=True)
     created_at = fields.DateTime(dump_only=True)
     modified_at = fields.DateTime(dump_only=True)
 

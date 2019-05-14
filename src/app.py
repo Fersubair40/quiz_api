@@ -6,7 +6,7 @@ from src.models import db
 
 
 from src.views.QuestionView import question_api as question_blueprnt
-
+from src.views.AnswerView import answer_api as answer_blueprint
 
 def create_app(env_name):
 
@@ -18,6 +18,7 @@ def create_app(env_name):
     db.init_app(app)
 
     app.register_blueprint(question_blueprnt, url_prefix='/api/v1/questions')
+    app.register_blueprint(answer_blueprint, url_prefix='/api/v1/answers')
 
     @app.route('/', methods=['GET'])
 

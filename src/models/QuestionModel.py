@@ -1,18 +1,15 @@
 from marshmallow import fields, Schema
-
 from . import db
 import datetime
-
 from src.models.AnswerModel import AnswerModel, AnswerSchema
 import random
 import string
 
 
-
-def randomString(stringLength=10):
-    """Generate a random string of fixed length """
-    letters = string.ascii_lowercase
-    return ''.join(random.choice(letters) for i in range(stringLength))
+def randomStringDigits(stringLength=6):
+    """Generate a random string of letters and digits """
+    lettersAndDigits = string.ascii_letters + string.digits
+    return ''.join(random.choice(lettersAndDigits) for i in range(stringLength))
 
 class QuestionModel(db.Model):
 
@@ -21,7 +18,7 @@ class QuestionModel(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     slug = db.Column(db.String)
     question = db.Column(db.Text, nullable=False, unique=True)
-    answers = db.relationship('AnswerModel', backref='answers', lazy=True)
+    answer = db.relationship('AnswerModel', backref='questions', lazy=True)
     created_at = db.Column(db.DateTime)
     modified_at = db.Column(db.DateTime)
     
@@ -29,7 +26,7 @@ class QuestionModel(db.Model):
 
     def __init__(self, data):
         self.id = data.get('id')
-        self.slug = randomString()
+        self.slug = randomStringDigits()
         self.question = data.get('question')
         self.created_at = datetime.datetime.utcnow()
         self.modified_at = datetime.datetime.utcnow()
@@ -59,7 +56,7 @@ class QuestionModel(db.Model):
         return QuestionModel.query.get(id)
     
     @staticmethod
-    def get_question_by_id(value):
+    def get_question_by_name(value):
         return QuestionModel.query.filter_by(question=value).first()
     
 
@@ -73,7 +70,7 @@ class QuestionSchema(Schema):
     id = fields.Int(dump_only=True)
     slug = fields.String(dump_only=True)
     question = fields.Str(required=True)
-    questions = fields.Nested(AnswerSchema, one=True)
+    answer = fields.Nested(AnswerSchema, many=True,  only=['answer'])
     created_at = fields.DateTime(dump_only=True)
     modified_at = fields.DateTime(dump_only=True)
 

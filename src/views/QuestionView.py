@@ -19,7 +19,7 @@ def create():
         return custom_response(error, 400)
 
 
-    question_in_db = QuestionModel.get_question_by_id(data.get('question'))
+    question_in_db = QuestionModel.get_question_by_name(data.get('question'))
     if question_in_db:
         message = {'error': 'question already exists, please add another question'}
         return custom_response(message, 400)
