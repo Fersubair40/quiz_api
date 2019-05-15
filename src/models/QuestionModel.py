@@ -7,7 +7,6 @@ import string
 
 
 def randomStringDigits(stringLength=6):
-    """Generate a random string of letters and digits """
     lettersAndDigits = string.ascii_letters + string.digits
     return ''.join(random.choice(lettersAndDigits) for i in range(stringLength))
 
@@ -18,7 +17,7 @@ class QuestionModel(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     slug = db.Column(db.String)
     question = db.Column(db.Text, nullable=False, unique=True)
-    answer = db.relationship('AnswerModel', backref='questions', lazy=True)
+    options = db.relationship('AnswerModel', backref='questions', lazy=True)
     created_at = db.Column(db.DateTime)
     modified_at = db.Column(db.DateTime)
     
@@ -68,9 +67,10 @@ class QuestionSchema(Schema):
 
 
     id = fields.Int(dump_only=True)
+    questions = fields.Dict(reuired=True)
     slug = fields.String(dump_only=True)
     question = fields.Str(required=True)
-    answer = fields.Nested(AnswerSchema, many=True,  only=['answer'])
+    options = fields.Nested(AnswerSchema, many=True)
     created_at = fields.DateTime(dump_only=True)
     modified_at = fields.DateTime(dump_only=True)
 
