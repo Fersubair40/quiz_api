@@ -1,5 +1,4 @@
 from flask import request, json, Response, Blueprint, g
-
 from src.models.QuestionModel import QuestionModel, QuestionSchema
 
 
@@ -9,7 +8,6 @@ question_schema = QuestionSchema()
 
 
 @question_api.route('/', methods=['POST'])
-
 def create():
 
     req_data = request.get_json()
@@ -88,7 +86,6 @@ def delete(question_id):
 
 
 def custom_response(res, status_code):
-
     return Response(
         mimetype="application/json",
         response=json.dumps(res),

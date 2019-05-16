@@ -4,7 +4,7 @@ import datetime
 from src.models.AnswerModel import AnswerModel, AnswerSchema
 import random
 import string
-
+from sqlalchemy.dialects.postgresql import JSON
 
 def randomStringDigits(stringLength=6):
     lettersAndDigits = string.ascii_letters + string.digits
@@ -70,7 +70,7 @@ class QuestionSchema(Schema):
     questions = fields.Dict(reuired=True)
     slug = fields.String(dump_only=True)
     question = fields.Str(required=True)
-    options = fields.Nested(AnswerSchema, many=True)
+    options = fields.Nested(AnswerSchema,  many=True)
     created_at = fields.DateTime(dump_only=True)
     modified_at = fields.DateTime(dump_only=True)
 
