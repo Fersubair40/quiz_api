@@ -1,4 +1,0 @@
-{
-    "python.pythonPath": "/home/subair/envs/venv/bin/python",
-    "python.linting.pylintArgs": ["--load-plugins", "pylint_flask"]
-}
