@@ -12,15 +12,16 @@ class AnswerModel(db.Model):
 
     __tablename__ = "answers"
 
-    created_at = db.Column(db.DateTime)
-    modified_at = db.Column(db.DateTime)
+    
     a = db.Column(db.String, nullable=False)
     b = db.Column(db.String, nullable=False)
     c = db.Column(db.String, nullable=False)
     d = db.Column(db.String, nullable=False)
     id = db.Column(db.Integer, primary_key=True)
     answer = db.Column(db.String, nullable=False)
-    response_id = db.Column(db.Integer, db.ForeignKey('questions.id'), nullable=False)
+    created_at = db.Column(db.DateTime)
+    modified_at = db.Column(db.DateTime)
+    question_id = db.Column(db.Integer, db.ForeignKey('questions.id'), nullable=False)
     
     
 

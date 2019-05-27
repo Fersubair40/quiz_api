@@ -1,14 +1,16 @@
-from marshmallow import fields, Schema
+from marshmallow import fields, Schema 
 from . import db
 import datetime
-from src.models.AnswerModel import AnswerModel, AnswerSchema
+# from src.models.AnswerModel import AnswerModel, AnswerSchema
 import random
 import string
-from sqlalchemy.dialects.postgresql import JSON
+
+
 
 def randomStringDigits(stringLength=6):
     lettersAndDigits = string.ascii_letters + string.digits
     return ''.join(random.choice(lettersAndDigits) for i in range(stringLength))
+
 
 class QuestionModel(db.Model):
 
@@ -17,7 +19,11 @@ class QuestionModel(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     slug = db.Column(db.String)
     question = db.Column(db.Text, nullable=False, unique=True)
-    options = db.relationship('AnswerModel', backref='questions', lazy=True)
+    options_a= db.Column(db.String, nullable=False)
+    options_b= db.Column(db.String, nullable=False)
+    options_c= db.Column(db.String, nullable=False)
+    options_d= db.Column(db.String, nullable=False)
+    answer = db.Column(db.String, nullable=False)
     created_at = db.Column(db.DateTime)
     modified_at = db.Column(db.DateTime)
     
@@ -27,6 +33,11 @@ class QuestionModel(db.Model):
         self.id = data.get('id')
         self.slug = randomStringDigits()
         self.question = data.get('question')
+        self.options_a = data.get('options_a')
+        self.options_b = data.get('options_b')
+        self.options_c = data.get('options_c')
+        self.options_d = data.get('options_d')
+        self.answer = data.get('answer')
         self.created_at = datetime.datetime.utcnow()
         self.modified_at = datetime.datetime.utcnow()
 
@@ -67,10 +78,14 @@ class QuestionSchema(Schema):
 
 
     id = fields.Int(dump_only=True)
-    questions = fields.Dict(reuired=True)
     slug = fields.String(dump_only=True)
-    question = fields.Str(required=True)
-    options = fields.Nested(AnswerSchema,  many=True)
+    questions = fields.Dict()
+    question = fields.String(required=True)
+    options_a = fields.String(required=True)
+    options_b = fields.String(required=True)
+    options_c = fields.String(required=True)
+    options_d = fields.String(required=True)
+    answer = fields.String(required=True)
     created_at = fields.DateTime(dump_only=True)
     modified_at = fields.DateTime(dump_only=True)
 
