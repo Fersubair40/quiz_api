@@ -1,38 +1,38 @@
 from . import db
 import datetime
+import random
+import string
 from marshmallow import fields, Schema
+from src.models.QuestionModel import QuestionModel, QuestionSchema
 
 
 
 
 
 
-class AnswerModel(db.Model):
+def randomStringDigits(stringLength=6):
+    lettersAndDigits = string.ascii_letters + string.digits
+    return ''.join(random.choice(lettersAndDigits) for i in range(stringLength))
 
 
-    __tablename__ = "answers"
+class ResponseModel(db.Model):
 
-    
-    a = db.Column(db.String, nullable=False)
-    b = db.Column(db.String, nullable=False)
-    c = db.Column(db.String, nullable=False)
-    d = db.Column(db.String, nullable=False)
+
+    __tablename__ = "responses"
+
     id = db.Column(db.Integer, primary_key=True)
-    answer = db.Column(db.String, nullable=False)
+    slug = db.Column(db.String)
     created_at = db.Column(db.DateTime)
     modified_at = db.Column(db.DateTime)
     question_id = db.Column(db.Integer, db.ForeignKey('questions.id'), nullable=False)
-    
+    answer = db.Column(db.String, nullable=False)
     
 
     def __init__(self, data):
 
+        self.slug = randomStringDigits()
+        self.question_id = data.get('question_id')
         self.answer = data.get('answer')
-        self.a = data.get('a')
-        self.b = data.get('b')
-        self.c = data.get('c')
-        self.d = data.get('d')
-        self.response_id = data.get('response_id')
         self.created_at = datetime.datetime.utcnow()
         self.modified_at = datetime.datetime.utcnow()
 
@@ -53,8 +53,8 @@ class AnswerModel(db.Model):
 
 
     @staticmethod
-    def get_all_answers():
-        return AnswerModel.query.all()
+    def get_all_responses():
+        return ResponseModel.query.all()
 
 
     @staticmethod
@@ -67,15 +67,11 @@ class AnswerModel(db.Model):
 
 
 
-class AnswerSchema(Schema):
+class ResponseSchema(Schema):
 
     id = fields.Int(dump_only=True)
     answer = fields.Str(required=True)
-    a = fields.Str(required=True)
-    b = fields.Str(required=True)
-    c = fields.Str(required=True)
-    d = fields.Str(required=True)
-    response_id = fields.Int(required=True)
+    question_id = fields.Int(required=True)  #Nested('QuestionModel', only=("id", "answer"))
     created_at = fields.DateTime(dump_only=True)
     modified_at = fields.DateTime(dump_only=True)
 

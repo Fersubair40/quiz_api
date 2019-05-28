@@ -1,7 +1,7 @@
 from marshmallow import fields, Schema 
 from . import db
 import datetime
-# from src.models.AnswerModel import AnswerModel, AnswerSchema
+
 import random
 import string
 
@@ -19,10 +19,10 @@ class QuestionModel(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     slug = db.Column(db.String)
     question = db.Column(db.Text, nullable=False, unique=True)
-    options_a= db.Column(db.String, nullable=False)
-    options_b= db.Column(db.String, nullable=False)
-    options_c= db.Column(db.String, nullable=False)
-    options_d= db.Column(db.String, nullable=False)
+    a= db.Column(db.String, nullable=False)
+    b= db.Column(db.String, nullable=False)
+    c= db.Column(db.String, nullable=False)
+    d= db.Column(db.String, nullable=False)
     answer = db.Column(db.String, nullable=False)
     created_at = db.Column(db.DateTime)
     modified_at = db.Column(db.DateTime)
@@ -33,10 +33,10 @@ class QuestionModel(db.Model):
         self.id = data.get('id')
         self.slug = randomStringDigits()
         self.question = data.get('question')
-        self.options_a = data.get('options_a')
-        self.options_b = data.get('options_b')
-        self.options_c = data.get('options_c')
-        self.options_d = data.get('options_d')
+        self.a = data.get('a')
+        self.b = data.get('b')
+        self.c = data.get('c')
+        self.d = data.get('d')
         self.answer = data.get('answer')
         self.created_at = datetime.datetime.utcnow()
         self.modified_at = datetime.datetime.utcnow()
@@ -79,12 +79,11 @@ class QuestionSchema(Schema):
 
     id = fields.Int(dump_only=True)
     slug = fields.String(dump_only=True)
-    questions = fields.Dict()
     question = fields.String(required=True)
-    options_a = fields.String(required=True)
-    options_b = fields.String(required=True)
-    options_c = fields.String(required=True)
-    options_d = fields.String(required=True)
+    a = fields.String(required=True)
+    b = fields.String(required=True)
+    c = fields.String(required=True)
+    d = fields.String(required=True)
     answer = fields.String(required=True)
     created_at = fields.DateTime(dump_only=True)
     modified_at = fields.DateTime(dump_only=True)

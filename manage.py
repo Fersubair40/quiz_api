@@ -4,7 +4,7 @@ import os
 from flask_script import Manager
 from flask_migrate import Migrate, MigrateCommand
 from src.models import QuestionModel
-from src.models import AnswerModel
+from src.models import ResponseModel
 
 from src.app import create_app, db
 
