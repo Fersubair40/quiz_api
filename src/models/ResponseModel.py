@@ -1,9 +1,10 @@
 from . import db
+from src.models.QuestionModel import QuestionModel, QuestionSchema
 import datetime
 import random
 import string
 from marshmallow import fields, Schema
-from src.models.QuestionModel import QuestionModel, QuestionSchema
+
 
 
 
@@ -59,8 +60,11 @@ class ResponseModel(db.Model):
 
     @staticmethod
     def get_one_answer(id):
-        return AnswerModel.query.get(id)
+        return ResponseModel.query.get(id)
 
+    # @staticmethod 
+    # def get_correct_answer(value):
+    #     return ResponseModel.query.filter_by(answer=value).first()
 
     def __repr__(self):
         return '<id {}>'.format(self.id)
@@ -71,8 +75,9 @@ class ResponseSchema(Schema):
 
     id = fields.Int(dump_only=True)
     answer = fields.Str(required=True)
-    question_id = fields.Int(required=True)  #Nested('QuestionModel', only=("id", "answer"))
+    question_id = fields.Int(required=True)
     created_at = fields.DateTime(dump_only=True)
+    question_id = fields.Int(required=True)
     modified_at = fields.DateTime(dump_only=True)
 
 

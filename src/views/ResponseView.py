@@ -17,11 +17,28 @@ def create():
     req_data = request.get_json()
     data, error = response_schema.load(req_data)
     if error:
-        return custom_error(error, 400)
+        return custom_response(error, 400)
+
+    # correct_answer = QuestionModel.get_correct_answer(data.get('answer'))
+    question = QuestionModel.get_correct_answer()
+    for answer in question:
+        correct_answer = QuestionModel.get_correct_answer(data.get('answer'))
+    if not correct_answer:
+        message = {'failed': 'incorrect answer'}
+        return custom_response(message, 200)
+
+    # question_answer = QuestionModel.query.get(answer)
+    # correct_answer = QuestionModel.get_one_question(question_answer)
+    # if not correct_answer:
+    #     return custom_response({'failed ':'incorrect answer'}, 200)
+
+
+
     response = ResponseModel(data)
-    response.save()
+    # response.save()
     data = response_schema.dump(response).data
-    return custom_response(data, 201)
+    message1 = {"passed": "correct answer"}
+    return custom_response(message1, 201)
 
 
 

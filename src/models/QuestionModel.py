@@ -1,7 +1,7 @@
 from marshmallow import fields, Schema 
 from . import db
 import datetime
-
+# from src.models.ResponseModel import ResponseModel, ResponseSchema
 import random
 import string
 
@@ -68,7 +68,14 @@ class QuestionModel(db.Model):
     @staticmethod
     def get_question_by_name(value):
         return QuestionModel.query.filter_by(question=value).first()
-    
+
+    @staticmethod 
+    def get_correct_answer(value):
+          return QuestionModel.query.filter_by(answer=value)
+
+    @staticmethod
+    def get_question_id(value):
+        return QuestionModel.query.filter_by(id=value).all()
 
     def _repr(self):
         return '<id {}>'.format(self.id)
