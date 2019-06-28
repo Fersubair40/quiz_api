@@ -20,7 +20,7 @@ def create():
         return custom_response(error, 400)
 
     # correct_answer = QuestionModel.get_correct_answer(data.get('answer'))
-    question = QuestionModel.get_correct_answer()
+    question = QuestionModel.get_all_questions()
     for answer in question:
         correct_answer = QuestionModel.get_correct_answer(data.get('answer'))
     if not correct_answer:
