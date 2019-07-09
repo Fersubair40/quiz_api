@@ -19,27 +19,20 @@ def create():
     if error:
         return custom_response(error, 400)
 
-    # correct_answer = QuestionModel.get_correct_answer(data.get('answer'))
-    # question = QuestionModel.get_all_questions()
-    # for answer in question:
-    # correct_answer = QuestionModel.get_correct_answer(data.get('idp'))
-    # if not correct_answer:
-    def get_response(id):
-        question_id = QuestionModel.get_one_question(id)
-        response_id = ResponseModel.get_one_answer(id)
+    question_answer = QuestionModel.id
+    response_answer = ResponseModel.id
 
-        if response_id == question_id:
-            response = ResponseModel(data)
-            response.save()
-            data = response_schema.dump(response).data
-            message1 = {"passed": "correct answer"}
-            flash('correct answer')
-        else:
-            message = {'failed': 'incorrect answer'}
-            return custom_response(message, 200)
+    if response_answer == question_answer:
+        response = ResponseModel(data)
+        # response.save()
+        data = response_schema.dump(response).data
+        flash('correct answer')
+    else:
+        message = {'failed': 'incorrect answer'}
+        return custom_response(message, 200)
 
-            
-        return custom_response(message1, 201)
+    message1 = {"passed": "correct answer"}
+    return custom_response(message1, 201)
         
 
 
