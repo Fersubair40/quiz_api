@@ -70,8 +70,8 @@ class QuestionModel(db.Model):
         return QuestionModel.query.filter_by(question=value).first()
 
     @staticmethod 
-    def get_correct_answer(id):
-          return QuestionModel.query.get(id)
+    def get_correct_answer(value):
+          return QuestionModel.query.filter_by(answer=value).all()
 
     @staticmethod
     def get_question_id(value):
