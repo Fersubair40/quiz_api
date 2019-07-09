@@ -25,7 +25,7 @@ class ResponseModel(db.Model):
     slug = db.Column(db.String)
     created_at = db.Column(db.DateTime)
     modified_at = db.Column(db.DateTime)
-    question_id = db.Column(db.Integer, db.ForeignKey('questions.id'), nullable=False)
+    question_id = db.Column(db.Integer,db.ForeignKey('questions.id'), nullable=False)
     answer = db.Column(db.String, nullable=False)
     
 
@@ -75,7 +75,6 @@ class ResponseSchema(Schema):
 
     id = fields.Int(dump_only=True)
     answer = fields.Str(required=True)
-    question_id = fields.Int(required=True)
     created_at = fields.DateTime(dump_only=True)
     question_id = fields.Int(required=True)
     modified_at = fields.DateTime(dump_only=True)
