@@ -70,8 +70,8 @@ class QuestionModel(db.Model):
         return QuestionModel.query.filter_by(question=value).first()
 
     @staticmethod 
-    def get_correct_answer(value):
-          return QuestionModel.query.filter_by(answer=value)
+    def get_correct_answer(id):
+          return QuestionModel.query.get(id)
 
     @staticmethod
     def get_question_id(value):
@@ -82,8 +82,6 @@ class QuestionModel(db.Model):
 
 
 class QuestionSchema(Schema):
-
-
     id = fields.Int(dump_only=True)
     slug = fields.String(dump_only=True)
     question = fields.String(required=True)
