@@ -14,7 +14,7 @@ def create_app(env_name):
     app = Flask(__name__)
 
     app.config.from_object(app_config[env_name])
-    
+
     db.init_app(app)
 
     app.register_blueprint(question_blueprnt, url_prefix='/api/v1/questions')
@@ -26,8 +26,8 @@ def create_app(env_name):
         # question = QuestionModel.get_all_question()
         # #  testing endpoint
         # req_data = request.get_json()
-        return 'endpoint is workin'
-    
+        return 'endpoint is working'
+
     return app
 
 
