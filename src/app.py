@@ -1,6 +1,6 @@
 from flask import request, json, Response, Flask
-from src.models import QuestionModel
-from src.models import ResponseModel
+from src.models.QuestionModel import QuestionModel
+from src.models.ResponseModel import ResponseModel
 from src.config import app_config
 from src.models import db
 

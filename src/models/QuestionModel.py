@@ -1,10 +1,9 @@
-from marshmallow import fields, Schema 
+from marshmallow import fields, Schema
 from . import db
 import datetime
 # from src.models.ResponseModel import ResponseModel, ResponseSchema
 import random
 import string
-
 
 
 def randomStringDigits(stringLength=6):
@@ -19,15 +18,13 @@ class QuestionModel(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     slug = db.Column(db.String)
     question = db.Column(db.Text, nullable=False, unique=True)
-    a= db.Column(db.String, nullable=False)
-    b= db.Column(db.String, nullable=False)
-    c= db.Column(db.String, nullable=False)
-    d= db.Column(db.String, nullable=False)
+    a = db.Column(db.String, nullable=False)
+    b = db.Column(db.String, nullable=False)
+    c = db.Column(db.String, nullable=False)
+    d = db.Column(db.String, nullable=False)
     answer = db.Column(db.String, nullable=False)
     created_at = db.Column(db.DateTime)
     modified_at = db.Column(db.DateTime)
-    
-
 
     def __init__(self, data):
         self.id = data.get('id')
@@ -41,12 +38,11 @@ class QuestionModel(db.Model):
         self.created_at = datetime.datetime.utcnow()
         self.modified_at = datetime.datetime.utcnow()
 
-
     def save(self):
         db.session.add(self)
         db.session.commit()
 
-    def update(self,data):
+    def update(self, data):
         for key, item in data.items():
             setattr(self, key, item)
         self.modified_at = datetime.datetime.utcnow()
@@ -56,7 +52,6 @@ class QuestionModel(db.Model):
         db.session.delete(self)
         db.session.commit()
 
-
     @staticmethod
     def get_all_questions():
         return QuestionModel.query.all()
@@ -64,14 +59,14 @@ class QuestionModel(db.Model):
     @staticmethod
     def get_one_question(id):
         return QuestionModel.query.get(id)
-    
+
     @staticmethod
     def get_question_by_name(value):
         return QuestionModel.query.filter_by(question=value).first()
 
-    @staticmethod 
+    @staticmethod
     def get_correct_answer(value):
-          return QuestionModel.query.filter_by(answer=value).all()
+        return QuestionModel.query.filter_by(answer=value).all()
 
     @staticmethod
     def get_question_id(value):
@@ -92,4 +87,3 @@ class QuestionSchema(Schema):
     answer = fields.String(required=True)
     created_at = fields.DateTime(dump_only=True)
     modified_at = fields.DateTime(dump_only=True)
-

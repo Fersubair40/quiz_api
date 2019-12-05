@@ -2,7 +2,7 @@ import os
 
 
 class Development(object):
-    
+
     # Development environment configuration
 
     DEBUG = True
@@ -20,10 +20,7 @@ class Production(object):
     SQLALCHEMY_DATABASE_URI = os.getenv("DATABASE_URL")
 
 
-
 app_config = {
     'development': Development,
     'production': Production,
 }
-
-
