@@ -3,29 +3,24 @@ autopep8==1.4.4
 bcrypt==3.1.7
 cffi==1.13.2
 Click==7.0
-<<<<<<< HEAD
 Flask==1.1.1
-=======
 command-not-found==0.3
 cryptography==2.3
 cupshelpers==1.0
 defer==1.0.6
 distro-info===0.18ubuntu0.18.04.1
 Flask==1.0.2
->>>>>>> 5f91a5eaff79a1b72e9eb019754a7e511509cdc9
 Flask-Bcrypt==0.7.1
 Flask-Migrate==2.5.2
 Flask-Script==2.0.6
 Flask-SQLAlchemy==2.4.1
 itsdangerous==1.1.0
-<<<<<<< HEAD
 Jinja2==2.10.3
 Mako==1.1.0
 MarkupSafe==1.1.1
 marshmallow==3.2.2
 psycopg2==2.8.4
 pycodestyle==2.5.0
-=======
 Jinja2==2.10.1
 keyring==10.6.0
 keyrings.alt==3.0
@@ -47,16 +42,13 @@ pipenv==2018.11.26
 protobuf==3.0.0
 psycopg2==2.8.1
 pycairo==1.16.2
->>>>>>> 5f91a5eaff79a1b72e9eb019754a7e511509cdc9
 pycparser==2.19
 PyJWT==1.7.1
 python-dateutil==2.8.1
 python-editor==1.0.4
-<<<<<<< HEAD
 six==1.13.0
 SQLAlchemy==1.3.11
 Werkzeug==0.16.0
-=======
 pytz==2018.3
 pyxdg==0.26
 PyYAML==5.1
@@ -80,4 +72,3 @@ wadllib==1.3.2
 Werkzeug==0.15.3
 xkit==0.0.0
 zope.interface==4.3.2
->>>>>>> 5f91a5eaff79a1b72e9eb019754a7e511509cdc9
